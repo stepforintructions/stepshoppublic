@@ -1,0 +1,1740 @@
+getgenv().TabSettings = { --customize yo stuff here
+Background = Color3.fromRGB(27, 27, 27),
+DarkContrast = Color3.fromRGB(35, 35, 35),--Element color
+TextColor = Color3.fromRGB(0, 255, 255),
+Gradient1 = Color3.fromRGB(53, 213, 227),
+Gradient2 = Color3.fromRGB(227, 53, 213),
+DiscordInvite = "",
+DiscordName = ""    
+}
+
+local Players_Table = {}
+for i,v in pairs(game.Players:GetPlayers()) do
+if v ~= game.Players.LocalPlayer then
+table.insert(Players_Table, v.Name)
+end
+end
+
+local NofiticationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/Faacts/UILibraries/main/STXNotificationHolder"))()
+local Nofitication = loadstring(game:HttpGet("https://raw.githubusercontent.com/Faacts/UILibraries/main/STXNotification"))()
+
+local function Notify(Title, Text, Time)
+Nofitication:Notify(
+    {Title = Title, Description = Text},
+    {OutlineColor = Color3.fromRGB(0, 255, 255),Time = Time or 5, Type = "default"} --[[default, option, image]]
+)
+end
+nameee = game.Players.LocalPlayer.Name
+Notify("Welcome !", "HeLLO "..nameee.."")
+local Night = false
+local Day = false
+local land1 = false
+local land2 = false
+local land3 = false
+game.Lighting.Changed:connect(function()
+if Day then
+    game.Lighting.TimeOfDay = "12:00:00"
+game.Lighting.OutdoorAmbient = Color3.fromRGB(220, 220, 220)
+game.Lighting.FogColor = Color3.fromRGB(170, 170, 170)
+    game.Lighting.Brightness = "0.8"
+    game:GetService("Lighting").FogEnd = 6400
+    game:GetService("Lighting").FogStart = 0
+elseif Night then
+    game.Lighting.TimeOfDay = "19:06:05"
+game.Lighting.OutdoorAmbient = Color3.fromRGB(122, 122, 190)
+game.Lighting.FogColor = Color3.fromRGB(110, 110, 177)
+    game:GetService("Lighting").FogEnd = 6400
+    game:GetService("Lighting").FogStart = 0
+end
+end)
+
+
+
+
+local UIlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Aidanman14/Test_ui/main/PJMUICustomizable"))()
+
+
+local Win = UIlib:Window("Step's Shop", "Public")
+local Player = Win:Tab("Player")
+local World = Win:Tab("World")
+local Dupe_Axe = Win:Tab("Axe Dupe")
+local Dupe_Check = Win:Tab('Check Slot')
+local Dupe_New = Win:Tab("MaxLand Dupe (NEW)")
+local Dupe_Auto = Win:Tab("MaxLand Dupe")
+local Dupe_Center = Win:Tab("Center Dupe")
+local Dupe_ToolM = Win:Tab("Dupe Tool (Manual)")
+local Claim_Tool = Win:Tab("Claim Tool")
+local Credits = Win:Tab("Credits")
+
+
+
+
+
+Player:Slider("Walk speed", 16, 500, 34, function(t)
+_G.WalkSpeed = t
+    local run = game:GetService('RunService')
+    local players = game:GetService('Players')
+    if _G.InitWS ~= true then
+        run.Heartbeat:connect(function()
+            players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.WalkSpeed
+        end)
+        _G.InitWS = true
+    end
+end)
+
+Player:Slider("Jump Power", 50, 500, 1, function(t)
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = t
+end)
+
+Player:Button("Reset WS/JP", function()
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+_G.WalkSpeed = 16
+local run = game:GetService('RunService')
+local players = game:GetService('Players')
+if _G.InitWS ~= true then
+    run.Heartbeat:connect(function()
+        players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.WalkSpeed
+    end)
+    _G.InitWS = true
+end
+end)
+Player:Button("Infinite Jump", function()
+local InfiniteJumpEnabled = true
+    game:GetService("UserInputService").JumpRequest:connect(function()
+        if InfiniteJumpEnabled then
+            game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+        end
+    end)
+end)
+
+
+
+
+
+
+-- World -----
+
+World:Button("Always Day", function()
+Day = true
+Night = false
+end)
+World:Button("Always Night", function()
+Day = false
+Night = true   
+end)
+
+World:Toggle("Shadow", true, function(t)
+if t then
+game:GetService("Lighting").GlobalShadows = t
+else
+    game:GetService("Lighting").GlobalShadows = t
+end
+end)
+World:Button("Better Graphics", function()
+local runDummyScript = function(f,scri)
+local oldenv = getfenv(f)
+local newenv = setmetatable({}, {
+__index = function(_, k)
+if k:lower() == 'script' then
+return scri
+else
+return oldenv[k]
+end
+end
+})
+setfenv(f, newenv)
+ypcall(function() f() end)
+end
+cors = {}
+mas = Instance.new("Model",game:GetService("Lighting")) 
+mas.Name = "CompiledModel"
+o2 = Instance.new("BloomEffect")
+o3 = Instance.new("BlurEffect")
+o4 = Instance.new("ColorCorrectionEffect")
+o5 = Instance.new("SunRaysEffect")
+o2.Parent = mas
+o2.Size = 56
+o2.Threshold = 0.98000001907349
+o3.Parent = mas
+o3.Size = 3
+o4.Parent = mas
+o4.Contrast = 0.52999997138977
+o4.Saturation = 0.098999999463558
+o5.Parent = mas
+o5.Intensity = 0.090000003576279
+mas.Parent = workspace
+mas:MakeJoints()
+local mas1 = mas:GetChildren()
+for i=1,#mas1 do
+mas1[i].Parent = game:GetService("Lighting") 
+ypcall(function() mas1[i]:MakeJoints() end)
+end
+mas:Destroy()
+for i=1,#cors do
+coroutine.resume(cors[i])
+end
+
+
+
+
+game.Lighting.Changed:connect(function()
+game:GetService("Lighting").Ambient = Color3.new(0, 0, 0)
+game:GetService("Lighting").ColorShift_Bottom = Color3.new(0, 0, 0)
+game:GetService("Lighting").ColorShift_Top = Color3.new(0, 0, 0)
+game:GetService("Lighting").GlobalShadows = true
+game:GetService("Lighting").Outlines = true
+game:GetService("Lighting").GeographicLatitude = 41.733299255371
+end)
+workspace.Region_Main:GetChildren()[82].Material = "Pavement"
+workspace.Region_Main:GetChildren()[81].Material = "Pavement"
+workspace.Region_Main:GetChildren()[74].Material = "Pavement"
+workspace.Region_Main:GetChildren()[39].Material = "Pavement"
+workspace.Region_Main:GetChildren()[73].Material = "Pavement"
+workspace.Region_Main:GetChildren()[72].Material = "Pavement"
+workspace.Region_Main:GetChildren()[70].Material = "Pavement"
+workspace.Region_Main:GetChildren()[65].Material = "Pavement"
+workspace.Region_Main:GetChildren()[64].Material = "Pavement"
+workspace.Region_Main:GetChildren()[123].Material = "Pavement"
+workspace.Region_Main:GetChildren()[57].Material = "Pavement"
+workspace.Region_Main:GetChildren()[38].Material = "Pavement"
+workspace.Region_Main:GetChildren()[55].Material = "Pavement"
+workspace.Region_Main.Road.Material = "Pavement"
+
+
+
+workspace.Region_Main:GetChildren()[146].Material = "Slate"
+workspace.Region_Main:GetChildren()[147].Material = "Slate"
+workspace.Region_Main:GetChildren()[105].Material = "Slate"
+workspace.Region_Main:GetChildren()[104].Material = "Slate"
+workspace.Region_Main:GetChildren()[62].Material = "Slate"
+workspace.Region_Main:GetChildren()[91].Material = "Slate"
+workspace.Region_Main:GetChildren()[87].Material = "Slate"
+workspace.Region_Main:GetChildren()[162].Material = "Slate"
+workspace.Region_Main:GetChildren()[63].Material = "Slate"
+workspace.Region_Main:GetChildren()[93].Material = "Slate"
+workspace.Region_Main:GetChildren()[94].Material = "Slate"
+workspace.Region_Main:GetChildren()[95].Material = "Slate"
+workspace.Region_Main:GetChildren()[96].Material = "Slate"
+workspace.Region_Main:GetChildren()[97].Material = "Slate"
+workspace.Region_Main:GetChildren()[98].Material = "Slate"
+workspace.Region_Main:GetChildren()[88].Material = "Slate"
+workspace.Region_Main:GetChildren()[92].Material = "Slate"
+workspace.Region_Main:GetChildren()[161].Material = "Slate"
+workspace.Region_Main:GetChildren()[145].Material = "Slate"
+workspace.Region_Main.Ground.Material = "Slate"
+workspace.Region_Main:GetChildren()[160].Material = "Slate"
+workspace.Water.Water.Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[8].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[10].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[3].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[2].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[4].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[5].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[6].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[25].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[7].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[24].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[23].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[11].Color = Color3.new(0, 150, 50)
+workspace.Water:GetChildren()[9].Color = Color3.new(0, 150, 50)
+
+
+
+workspace.Region_Main:GetChildren()[103].Material = "Slate"
+workspace.Region_Main:GetChildren()[115].Material = "Slate"
+workspace.Region_Main:GetChildren()[110].Material = "Slate"
+workspace.Region_Main:GetChildren()[101].Material = "Slate"
+workspace.Region_Main:GetChildren()[102].Material = "Slate"
+workspace.Region_Main:GetChildren()[100].Material = "Slate"
+workspace.Region_Main:GetChildren()[99].Material = "Slate"
+workspace.Region_Main:GetChildren()[90].Material = "Slate"
+workspace.Region_Main:GetChildren()[89].Material = "Slate"
+workspace.Region_Main:GetChildren()[106].Material = "Slate"
+workspace.Region_Main:GetChildren()[109].Material = "Slate"
+workspace.Region_Main:GetChildren()[107].Material = "Slate"
+workspace.Region_Main:GetChildren()[108].Material = "Slate"
+workspace.Region_Main:GetChildren()[75].Material = "Slate"
+workspace.Region_Main:GetChildren()[114].Material = "Slate"
+workspace.Region_Main:GetChildren()[68].Material = "Slate"
+workspace.Region_Main:GetChildren()[111].Material = "Slate"
+workspace.Region_Main:GetChildren()[113].Material = "Slate"
+workspace.Region_Main:GetChildren()[112].Material = "Slate"
+
+workspace.Stores.WoodRUs.Parts.PREMIUMSELECTION.SurfaceGui.TextLabel.Text = "Step's Shop"
+workspace.Stores.WoodRUs.Parts.PREMIUMSELECTION.SurfaceGui.TextLabel.TextColor3 = Color3.new(0, 255, 255)
+end)
+World:Slider("Brightness", 0, 5, 0, function(Value)
+game.Lighting.Brightness = Value
+end)
+
+World:line()
+
+
+function Dupe111(Slot)
+    game:GetService("Workspace").Camera.CameraType = 0
+    scr=getsenv(game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient)
+    game.Workspace.Gravity = 1000000000
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(407.05999755859375, -384.630615234375, -1444.6400146484375)
+    wait(0.5)
+    game.Workspace.Gravity = 196.2
+    wait(3)
+            spawn(function()
+                loadedSlot=game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(Slot ,game.Players.LocalPlayer)
+            end)
+            game:GetService("Workspace").Camera.CameraType = 3
+            repeat wait()until game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
+            for i=1,20 do 
+                wait(1)
+                scr.scrollSelection(-1)
+                wait()
+                scr.selectionMade()
+                wait()
+                scr.selectionMade()
+                wait(0.5)
+                for i,v in next, game:GetService("Workspace").Properties:GetChildren() do
+            if v:FindFirstChild("Owner") then
+                repeat
+                Amount = 0
+                for a,b in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                    if b.Name ~= "BlueprintTool" and b.Name == "Tool" then
+                        Amount = Amount + 1
+                    end
+                end
+                wait()
+                until Amount >= 10
+                game.Players.LocalPlayer.Character.Head:remove()
+                break
+            end
+        end
+    end
+end
+
+
+
+Dupe_Axe:Label("Only Works on Data Size 1")
+
+Dupe_Axe:Button("Slot 1", function()
+    Dupe111(1)
+end)
+Dupe_Axe:Button("Slot 2", function()
+    Dupe111(2)
+end)
+Dupe_Axe:Button("Slot 3", function()
+    Dupe111(3)
+end)
+Dupe_Axe:Button("Slot 4", function()
+    Dupe111(4)
+end)
+Dupe_Axe:Button("Slot 5", function()
+    Dupe111(5)
+end)
+Dupe_Axe:Button("Slot 6", function()
+    Dupe111(6)
+end)
+
+-- Dupe Auto
+
+function KKC()
+    for i,v in next, game:GetService("Workspace").Properties:GetChildren() do
+        if v:FindFirstChild("Owner") and v.Owner.Value == nil then
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(v,v.OriginSquare.Position)
+            break
+        end
+    end
+end
+
+KKB = 0
+KKA = 0
+
+
+
+Dupe_Auto:line()
+
+Dupe_Auto:Button("Unload Current Slot", function()
+    Notify("Loading","",5)
+    local args = {
+    [1] = 7,
+    [2] = game:GetService("Players").LocalPlayer
+    }
+    game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(unpack(args))
+end)
+Dupe_Auto:line()
+
+
+local userejoin = false
+
+
+Dupe_Auto:Toggle("Turn on Rejoin", false, function(t)
+    if t then
+        userejoin = t
+    else
+        userejoin = t
+    end
+end)
+
+Dupe_Auto:Slider("Slot", 0, 6, 0, function(t)
+    KKB = t
+end)
+Dupe_Auto:Slider("Time To Leave", 0, 120, 0, function(t)
+    KKA = t
+end)
+Dupe_Auto:line()
+
+Dupe_Auto:Button("Start MaxLand Dupe", function()
+    Notify("Duping...","Slot "..KKB.."\nTime "..KKA.."",5)
+
+    function Dupe(Slot)
+        scr=getsenv(game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient)
+        loadedSlot=nil
+        spawn(function()
+            local args = {
+                [1] = Slot,
+                [2] = game:GetService("Players").LocalPlayer
+            }
+            game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(unpack(args))            
+        end)
+        repeat wait()until game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
+        for i=1,20 do 
+            wait(1)
+            scr.scrollSelection(-1)
+            wait()
+            scr.selectionMade()
+            wait()
+            scr.selectionMade()
+            wait(KKA)
+            if userejoin then
+                game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+                KKC()
+            else
+                game:shutdown()
+                KKC()
+            end
+        end
+    end
+    Dupe(KKB)
+end)
+Dupe_Auto:line()
+
+
+DupeSlot = 0
+    land1 = false
+    function land1s()
+        game:GetService("Workspace").Camera.CameraType = 0
+        for i,v in next, game:GetService("Workspace").Properties:GetChildren() do
+            if v:FindFirstChild("Owner") and v.Owner.Value == nil then
+                game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(v,v.OriginSquare.Position)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame + Vector3.new(0,2,0)
+                break
+            end
+        end
+        end
+
+
+    Dupe_New:Toggle("Turn on Maxland", false, function(t)
+        if t then
+            land1 = t
+        else
+            land1 = t
+        end
+    end)
+
+
+
+    for_small_base = false
+    for_large_base = false
+    vmdksdkfsd = {"Emulator / Phone","Desktop"}
+
+
+    Dupe_New:Dropdown("Select Your Device", vmdksdkfsd, function(t)
+        if t == "Emulator / Phone" then
+            for_small_base = true
+            for_large_base = false
+        elseif t == "Desktop" then
+            for_small_base = false
+            for_large_base = true
+        end
+        print(for_small_base, 1)
+        print(for_large_base, 2)
+    end)
+
+
+
+    Dupe_New:Slider("Slot", 0, 6, 0, function(t)
+        DupeSlot = t
+    end)    
+
+
+    Dupe_New:Button("Dupe 1", function()
+        if for_small_base == false and for_large_base == false or for_small_base == true and for_large_base == true then
+game.ReplicatedStorage.Notices.SendUserNotice:Fire("[Size of your base]\nDropdown is Empty!")
+else
+for i, v in pairs(game:GetService("Workspace").PlayerModels:GetChildren()) do
+            v.Name = "1"
+        end
+        Notify("Step's Shop", "Duping", 10)
+        scr=getsenv(game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient)
+
+        spawn(function()
+            local args = {
+                [1] = DupeSlot,
+                [2] = game:GetService("Players").LocalPlayer
+            }
+            game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(unpack(args))
+        end)
+
+    repeat wait() until workspace.Effects:FindFirstChild("StructureModel")
+    game.ReplicatedStorage.Notices.SendUserNotice:Fire("[ Processing ] \n\nThis May take longer.. Please Wait")
+
+local array = {}
+    for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    table.insert(array, v.Name)
+    end
+
+local senv = getsenv(game:GetService("Players").LocalPlayer.PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient)
+local old = senv.enterPurchaseMode
+
+
+
+lettera = 1
+first = array[#array]
+firstcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == first then
+        firstcount = firstcount + 1
+    end
+end
+task.wait()
+
+second = array[#array - firstcount]
+secondcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == second then
+        secondcount = secondcount + 1
+    end
+end
+task.wait()
+
+thirdthing = firstcount + secondcount
+third = array[#array - thirdthing]
+thirdcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == third then
+        thirdcount = thirdcount + 1
+    end
+end
+task.wait()
+
+fourththing = firstcount + secondcount + thirdcount
+fourth = array[#array - fourththing]
+fourthcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == fourth then
+        fourthcount = fourthcount + 1
+    end
+end
+task.wait()
+
+fifththing = firstcount + secondcount + thirdcount + fourthcount
+fifth = array[#array - fifththing]
+fifthcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == fifth then
+        fifthcount = fifthcount + 1
+    end
+end
+sixthing = firstcount + secondcount + thirdcount + fourthcount + fifthcount
+six = array[#array - sixthing]
+sixcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == six then
+        sixcount = sixcount + 1
+    end
+end
+task.wait()
+
+
+selectionllf = nil
+
+
+
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+
+if v.Name == first then
+firstcount = firstcount + 1
+wait()
+if firstcount > 300 then
+selectionllf = first
+end
+
+elseif v.Name == second then
+secondcount = secondcount + 1
+wait()
+if secondcount > 200 then
+selectionllf = first
+end
+
+elseif v.Name == third then
+thirdcount = thirdcount + 1
+wait()
+if thirdcount > 100 then
+selectionllf = first
+end
+
+else
+if for_large_base == true and for_small_base == false then
+selectionllf = fourth
+elseif for_small_base == true and for_large_base == false then
+selectionllf = fifth
+end
+end
+end
+repeat wait() until selectionllf;
+
+
+print(selectionllf, "ASDAJKSDAKSDJALKSD")
+
+game.ReplicatedStorage.Notices.SendUserNotice:Fire("Working")
+Notify("Step's Shop","Processing",5)
+    
+
+    wait(0)
+
+    spawn(function()
+        repeat wait()until game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
+        for i=1,1 do 
+        wait(1)
+        scr.scrollSelection(-1)
+        wait()
+        scr.selectionMade()
+        wait()
+        scr.selectionMade()
+        wait()
+        repeat
+        if selectionllf == "BasicHatchet" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("BasicHatchet")
+                if workspace.PlayerModels.BasicHatchet:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.BasicHatchet:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                    end
+            end
+        elseif selectionllf == "Axe1" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("Axe1")
+                if workspace.PlayerModels.Axe1:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.Axe1:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "Axe2" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("Axe2")
+                if workspace.PlayerModels.Axe2:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.Axe2:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "Axe3" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("Axe3")
+                if workspace.PlayerModels.Axe3:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.Axe3:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "AxeAlphaTesters" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("AxeAlphaTesters")
+                if workspace.PlayerModels.AxeAlphaTesters:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.AxeAlphaTesters:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "AxeAmber" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("AxeAmber")
+                if workspace.PlayerModels.AxeAmber:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.AxeAmber:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "AxeBetaTesters" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("AxeBetaTesters")
+                if workspace.PlayerModels.AxeBetaTesters:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.AxeBetaTesters:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "AxeChicken" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("AxeChicken")
+                if workspace.PlayerModels.AxeChicken:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.AxeChicken:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "AxeSwamp" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("AxeSwamp")
+                if workspace.PlayerModels.AxeSwamp:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.AxeSwamp:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "AxeTwitter" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("AxeTwitter")
+                if workspace.PlayerModels.AxeTwitter:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.AxeTwitter:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "Beesaxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("Beesaxe")
+                if workspace.PlayerModels.Beesaxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.Beesaxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "CandyCaneAxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("CandyCaneAxe")
+                if workspace.PlayerModels.CandyCaneAxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.CandyCaneAxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "CandyCornAxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("CandyCornAxe")
+                if workspace.PlayerModels.CandyCornAxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.CandyCornAxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "CaveAxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("CaveAxe")
+                if workspace.PlayerModels.CaveAxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.CaveAxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "EndTimesAxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("EndTimesAxe")
+                if workspace.PlayerModels.EndTimesAxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.EndTimesAxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "FireAxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("FireAxe")
+                if workspace.PlayerModels.FireAxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.FireAxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "GingerbreadAxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("GingerbreadAxe")
+                if workspace.PlayerModels.GingerbreadAxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.GingerbreadAxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "IceAxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("IceAxe")
+                if workspace.PlayerModels.IceAxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.IceAxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "ManyAxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("ManyAxe")
+                if workspace.PlayerModels.ManyAxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.ManyAxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "Rukiryaxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("Rukiryaxe")
+                if workspace.PlayerModels.Rukiryaxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.Rukiryaxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        elseif selectionllf == "SilverAxe" then
+            while wait() do
+                repeat wait() until Workspace.PlayerModels:FindFirstChild("SilverAxe")
+                if workspace.PlayerModels.SilverAxe:FindFirstChild("DraggableItem") then
+                    workspace.PlayerModels.SilverAxe:Destroy()
+                    else
+                        game:shutdown()
+                    end
+                if land1 then
+                        land1s()
+                        else
+                            land1 = false
+                            
+                    end
+            end
+        else
+            repeat wait() until Workspace.PlayerModels:FindFirstChild(selectionllf)
+            game:shutdown()
+            if land1 then
+                land1s()
+                else
+                    land1 = false
+                    
+            end
+        end
+    until game:GetService("Players").LocalPlayer.OwnsProperty.Value == true
+        end
+    end)
+end
+
+    end)
+
+Dupe_New:Button("Dupe 2", function()
+        if for_small_base == false and for_large_base == false or for_small_base == true and for_large_base == true then
+game.ReplicatedStorage.Notices.SendUserNotice:Fire("[Size of your base]\nDropdown is Empty!")
+else
+for i, v in pairs(game:GetService("Workspace").PlayerModels:GetChildren()) do
+            v.Name = "1"
+        end
+        Notify("Step's Shop", "Duping", 10)
+        scr=getsenv(game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient)
+
+        spawn(function()
+            local args = {
+                [1] = DupeSlot,
+                [2] = game:GetService("Players").LocalPlayer
+            }
+            game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(unpack(args))
+        end)
+
+    repeat wait() until workspace.Effects:FindFirstChild("StructureModel")
+    game.ReplicatedStorage.Notices.SendUserNotice:Fire("[ Processing ] \n\nThis May take longer.. Please Wait")
+
+local array = {}
+    for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    table.insert(array, v.Name)
+    end
+
+local senv = getsenv(game:GetService("Players").LocalPlayer.PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient)
+local old = senv.enterPurchaseMode
+
+
+
+lettera = 1
+first = array[#array]
+firstcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == first then
+        firstcount = firstcount + 1
+    end
+end
+task.wait()
+
+second = array[#array - firstcount]
+secondcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == second then
+        secondcount = secondcount + 1
+    end
+end
+task.wait()
+
+thirdthing = firstcount + secondcount
+third = array[#array - thirdthing]
+thirdcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == third then
+        thirdcount = thirdcount + 1
+    end
+end
+task.wait()
+
+fourththing = firstcount + secondcount + thirdcount
+fourth = array[#array - fourththing]
+fourthcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == fourth then
+        fourthcount = fourthcount + 1
+    end
+end
+task.wait()
+
+fifththing = firstcount + secondcount + thirdcount + fourthcount
+fifth = array[#array - fifththing]
+fifthcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == fifth then
+        fifthcount = fifthcount + 1
+    end
+end
+sixthing = firstcount + secondcount + thirdcount + fourthcount + fifthcount
+six = array[#array - sixthing]
+sixcount = 0
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+    if v.Name == six then
+        sixcount = sixcount + 1
+    end
+end
+task.wait()
+
+
+selectionllf = nil
+
+
+
+for i,v in pairs(workspace.Effects.StructureModel:GetChildren()) do
+
+if v.Name == first then
+firstcount = firstcount + 1
+wait()
+if firstcount > 300 then
+selectionllf = first
+end
+
+elseif v.Name == second then
+secondcount = secondcount + 1
+wait()
+if secondcount > 200 then
+selectionllf = first
+end
+
+elseif v.Name == third then
+thirdcount = thirdcount + 1
+wait()
+if thirdcount > 100 then
+selectionllf = first
+end
+
+else
+if for_large_base == true and for_small_base == false then
+selectionllf = fourth
+elseif for_small_base == true and for_large_base == false then
+selectionllf = fifth
+end
+end
+end
+repeat wait() until selectionllf;
+
+
+game.ReplicatedStorage.Notices.SendUserNotice:Fire("Working")
+Notify("Step's Shop","Processing",5)
+    
+
+    wait(0)
+
+    spawn(function()
+        repeat wait()until game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
+        for i=1,1 do 
+        wait(1)
+        scr.scrollSelection(-1)
+        wait()
+        scr.selectionMade()
+        wait()
+        scr.selectionMade()
+        wait()
+        repeat wait() until Workspace.PlayerModels:FindFirstChild(selectionllf)
+            game:shutdown()
+            if land1 then
+                land1s()
+                else
+                    land1 = false
+                    
+            end
+        end
+    end)
+end
+
+    end)
+
+
+
+
+
+
+
+
+Dupe_Center:line()
+
+KKBCenter = 0
+KKACenter = 0
+
+
+local userejoin1 = false
+
+Dupe_Center:Label("====   Dupe Center Gifts   ====")
+Dupe_Center:Toggle("Turn on Rejoin", false, function(t)
+    if t then
+        userejoin1 = t
+    else
+        userejoin1 = t
+    end
+end)
+
+Dupe_Center:Slider("Slot", 0, 6, 0, function(t)
+    KKBCenter = t
+end)
+Dupe_Center:Slider("Time To Leave", 0, 50, 0, function(t)
+    KKACenter = t
+end)
+Dupe_Center:line()
+
+Dupe_Center:Button("Start Center Dupe", function()
+    Notify("Duping...","Slot "..KKB.."\nTime "..KKA.."",5)
+
+    function Dupe(Slot)
+        scr=getsenv(game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient)
+        loadedSlot=nil
+        spawn(function()
+            local args = {
+                [1] = Slot,
+                [2] = game:GetService("Players").LocalPlayer
+            }
+            game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(unpack(args))            
+        end)
+        repeat wait()until game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
+        for i=1,20 do 
+            wait(1)
+            scr.scrollSelection(-1)
+            wait()
+            scr.selectionMade()
+            wait()
+            scr.selectionMade()
+            wait(KKACenter)
+            if userejoin1 then
+                game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+            else
+                game:shutdown()
+            end
+        end
+    end
+    Dupe(KKBCenter)
+end)
+Dupe_Center:line()
+Dupe_Center:line()
+Dupe_Center:line()
+
+Dupe_Center:Label("====   Dupe Center Wood   ====")
+
+local userejoin2 = false
+
+Dupe_Center:Toggle("Turn on Rejoin", false, function(t)
+    if t then
+        userejoin2 = t
+    else
+        userejoin2 = t
+    end
+end)
+
+Dupe_Center:Slider("Slot", 0, 6, 0, function(t)
+    KKBCenter = t
+end)
+Dupe_Center:Button("Start Center Dupe", function()
+    Notify("Duping...","Slot "..KKB.."\nTime "..KKA.."",5)
+
+    function Dupe(Slot)
+        scr=getsenv(game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient)
+        loadedSlot=nil
+        spawn(function()
+            local args = {
+                [1] = Slot,
+                [2] = game:GetService("Players").LocalPlayer
+            }
+            game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(unpack(args))            
+        end)
+        repeat wait()until game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
+        for i=1,20 do 
+            wait(1)
+            scr.scrollSelection(-1)
+            wait()
+            scr.selectionMade()
+            wait()
+            scr.selectionMade()
+            if userejoin2 then
+                game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+            else
+                game:shutdown()
+            end
+        end
+    end
+    Dupe(KKBCenter)
+end)
+
+
+
+
+
+--- Check Slot
+
+Dupe_Check:Label('Check Time')
+    
+Dupe_Check:Slider("Slot", 0, 6, 0, function(t)
+        KKB1 = t
+    end)
+Dupe_Check:Button("Start", function()
+        Notify("Step's Shop", "Loading...", 10)  
+    function Dupe(Slot)
+        scr=getsenv(game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient)
+        loadedSlot=nil
+        spawn(function()
+            loadedSlot=game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(Slot ,game.Players.LocalPlayer)
+        end)
+        repeat wait()until game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
+        for i=1,1 do 
+            wait(1)
+            scr.scrollSelection(-1)
+            wait()
+            scr.selectionMade()
+            wait()
+            scr.selectionMade();
+            wait()
+            StarterGui = game:GetService("StarterGui")
+            local decimals = 2
+            local x = os.clock()
+
+            repeat wait() until game.Players.LocalPlayer.OwnsProperty.Value == true
+            local t = (string.format("%."..tostring(decimals).."f\n", os.clock() - x))
+            Notify("Step's Shop", "Slot "..KKB1.."\nTime : "..t.."", 60)
+            Notify("[READ ME]", "You Still have to minus that time", 60)
+            game.Players.LocalPlayer.OwnsProperty.Value = false
+        end
+    end
+    Dupe(KKB1)
+    end)
+    Dupe_Check:line()
+
+
+
+
+-- DUPE TOOL
+
+Dupe_ToolM:line()
+Dupe_ToolM:Button("Remove OwnerShip", function()
+function Dupe(Slot,Amount,timewhit)
+    for i = 1,Amount do
+        if not game:GetService("ReplicatedStorage").LoadSaveRequests.ClientMayLoad:InvokeServer(game.Players.LocalPlayer) then
+            repeat task.wait() until game:GetService("ReplicatedStorage").LoadSaveRequests.ClientMayLoad:InvokeServer(game.Players.LocalPlayer)
+        end
+        game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(Slot,game.Players.LocalPlayer)
+        repeat task.wait() until game.Players.LocalPlayer.CurrentlySavingOrLoading.Value ~= true
+        task.wait()
+    end
+    notify("Removed Ownership","",5)
+end
+
+Dupe(7,1,3)
+end)
+Dupe_ToolM:Button("Quick Leave", function()
+game:shutdown()
+end)
+Dupe_ToolM:Button("Rejoin", function()
+game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+end)
+----------------
+Dupe_ToolM:line()
+----------------
+
+
+Dupe_ToolM:Button("Free Land + Quick Leave", function()
+    for i,v in next, game:GetService("Workspace").Properties:GetChildren() do
+        if v:FindFirstChild("Owner") and v.Owner.Value == nil then
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(v,v.OriginSquare.Position)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame + Vector3.new(0,2,0)
+            break
+        end
+    end
+    wait()
+    game:GetService("TeleportService"):Teleport(game:shutdown(), game:GetService("Players").LocalPlayer)
+end)
+
+Dupe_ToolM:Button("Free LAND", function()
+for i,v in next, game:GetService("Workspace").Properties:GetChildren() do
+    if v:FindFirstChild("Owner") and v.Owner.Value == nil then
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(v,v.OriginSquare.Position)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame + Vector3.new(0,2,0)
+        break
+    end
+end
+Notify("Free land","",2)
+
+end)
+Dupe_ToolM:Button("Max LAND", function()
+for s,d in pairs(workspace.Properties:GetChildren()) do 
+    if d:FindFirstChild("Owner") and d:FindFirstChild("OriginSquare") and d.Owner.Value == game.Players.LocalPlayer then
+        local PlotPos = d.OriginSquare.Position
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 40, PlotPos.Y, PlotPos.Z))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 40, PlotPos.Y, PlotPos.Z))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X , PlotPos.Y, PlotPos.Z + 40))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X , PlotPos.Y, PlotPos.Z - 40))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 40 , PlotPos.Y, PlotPos.Z + 40))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 40 , PlotPos.Y, PlotPos.Z - 40))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 40 , PlotPos.Y, PlotPos.Z + 40))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 40 , PlotPos.Y, PlotPos.Z - 40))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 80 , PlotPos.Y, PlotPos.Z))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 80 , PlotPos.Y, PlotPos.Z))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X , PlotPos.Y, PlotPos.Z + 80))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X , PlotPos.Y, PlotPos.Z - 80))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 80 , PlotPos.Y, PlotPos.Z + 80))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 80 , PlotPos.Y, PlotPos.Z - 80))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 80 , PlotPos.Y, PlotPos.Z + 80))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 80 , PlotPos.Y, PlotPos.Z - 80))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 40 , PlotPos.Y, PlotPos.Z + 80))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 40 , PlotPos.Y, PlotPos.Z + 80))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 80 , PlotPos.Y, PlotPos.Z + 40))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 80 , PlotPos.Y, PlotPos.Z - 40))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 80 , PlotPos.Y, PlotPos.Z + 40))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 80 , PlotPos.Y, PlotPos.Z - 40))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 40 , PlotPos.Y, PlotPos.Z - 80))
+        game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 40 , PlotPos.Y, PlotPos.Z - 80))
+    end
+    end
+    Notify("Max land","",2)
+end)
+---------------
+Dupe_ToolM:line()
+--------------- 
+
+
+
+function maxnext()
+    for s,d in pairs(workspace.Properties:GetChildren()) do 
+        if d:FindFirstChild("Owner") and d:FindFirstChild("OriginSquare") and d.Owner.Value == game.Players.LocalPlayer then
+            local PlotPos = d.OriginSquare.Position
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 40, PlotPos.Y, PlotPos.Z))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 40, PlotPos.Y, PlotPos.Z))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X , PlotPos.Y, PlotPos.Z + 40))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X , PlotPos.Y, PlotPos.Z - 40))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 40 , PlotPos.Y, PlotPos.Z + 40))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 40 , PlotPos.Y, PlotPos.Z - 40))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 40 , PlotPos.Y, PlotPos.Z + 40))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 40 , PlotPos.Y, PlotPos.Z - 40))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 80 , PlotPos.Y, PlotPos.Z))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 80 , PlotPos.Y, PlotPos.Z))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X , PlotPos.Y, PlotPos.Z + 80))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X , PlotPos.Y, PlotPos.Z - 80))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 80 , PlotPos.Y, PlotPos.Z + 80))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 80 , PlotPos.Y, PlotPos.Z - 80))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 80 , PlotPos.Y, PlotPos.Z + 80))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 80 , PlotPos.Y, PlotPos.Z - 80))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 40 , PlotPos.Y, PlotPos.Z + 80))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 40 , PlotPos.Y, PlotPos.Z + 80))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 80 , PlotPos.Y, PlotPos.Z + 40))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 80 , PlotPos.Y, PlotPos.Z - 40))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 80 , PlotPos.Y, PlotPos.Z + 40))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 80 , PlotPos.Y, PlotPos.Z - 40))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X + 40 , PlotPos.Y, PlotPos.Z - 80))
+            game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty:FireServer(d,CFrame.new(PlotPos.X - 40 , PlotPos.Y, PlotPos.Z - 80))
+        end
+    end
+end
+
+
+Claim_Tool:Toggle("Turn On Colors", false, function(t)
+    if t then
+        workspace.Properties:GetChildren()[9].Name = "nine"
+        workspace.Properties.Property.Name = "one"
+        workspace.Properties:GetChildren()[5].Name = "five"
+        workspace.Properties:GetChildren()[2].Name = "two"
+        workspace.Properties:GetChildren()[7].Name = "seven"
+        workspace.Properties:GetChildren()[6].Name = "six"
+        workspace.Properties:GetChildren()[8].Name = "eight"
+        workspace.Properties:GetChildren()[4].Name = "four"
+        workspace.Properties:GetChildren()[3].Name = "three"
+        
+        wait()
+        
+        workspace.Properties.eight.OriginSquare.Color = Color3.fromRGB(255, 0, 0 )
+        workspace.Properties.eight.OriginSquare.Material = "Neon"
+        
+        workspace.Properties.five.OriginSquare.Color = Color3.fromRGB(255, 128, 0)
+        workspace.Properties.five.OriginSquare.Material = "Neon"
+        
+        workspace.Properties.four.OriginSquare.Color = Color3.fromRGB(255, 255, 0)
+        workspace.Properties.four.OriginSquare.Material = "Neon"
+        
+        workspace.Properties.nine.OriginSquare.Color = Color3.fromRGB(128, 255, 0)
+        workspace.Properties.nine.OriginSquare.Material = "Neon"
+        
+        workspace.Properties.one.OriginSquare.Color = Color3.fromRGB(0, 255, 255)
+        workspace.Properties.one.OriginSquare.Material = "Neon"
+        
+        workspace.Properties.seven.OriginSquare.Color = Color3.fromRGB(0, 0, 255)
+        workspace.Properties.seven.OriginSquare.Material = "Neon"
+        
+        workspace.Properties.six.OriginSquare.Color = Color3.fromRGB(127, 0, 255)
+        workspace.Properties.six.OriginSquare.Material = "Neon"
+        
+        workspace.Properties.three.OriginSquare.Color = Color3.fromRGB(255, 0, 255)
+        workspace.Properties.three.OriginSquare.Material = "Neon"
+        
+        workspace.Properties.two.OriginSquare.Color = Color3.fromRGB(128, 128, 128)
+        workspace.Properties.two.OriginSquare.Material = "Neon"
+        
+        --- Color3.fromRGB(124, 92, 70)
+        --- Concrete
+        
+        wait(1)
+        
+        for i,v in pairs (workspace.Properties.eight:GetChildren()) do
+        if v.Name == "Square" then
+        v.Color = Color3.fromRGB( 255, 0, 0 )
+        v.Material = "Neon"
+        end
+        end
+        for i,v in pairs (workspace.Properties.five:GetChildren()) do
+        if v.Name == "Square" then
+        v.Color = Color3.fromRGB( 255, 128, 0)
+        v.Material = "Neon"
+        end
+        end
+        for i,v in pairs (workspace.Properties.four:GetChildren()) do
+        if v.Name == "Square" then
+        v.Color = Color3.fromRGB( 255, 255, 0)
+        v.Material = "Neon"
+        end
+        end
+        
+        for i,v in pairs (workspace.Properties.nine:GetChildren()) do
+        if v.Name == "Square" then
+        v.Color = Color3.fromRGB( 128, 255, 0)
+        v.Material = "Neon"
+        end
+        end
+        
+        for i,v in pairs (workspace.Properties.one:GetChildren()) do
+        if v.Name == "Square" then
+        v.Color = Color3.fromRGB( 0, 255, 255)
+        v.Material = "Neon"
+        end
+        end
+        
+        for i,v in pairs (workspace.Properties.seven:GetChildren()) do
+        if v.Name == "Square" then
+        v.Color = Color3.fromRGB( 0, 0, 255)
+        v.Material = "Neon"
+        end
+        end
+        
+        for i,v in pairs (workspace.Properties.six:GetChildren()) do
+        if v.Name == "Square" then
+        v.Color = Color3.fromRGB( 127, 0, 255)
+        v.Material = "Neon"
+        end
+        end
+        
+        for i,v in pairs (workspace.Properties.three:GetChildren()) do
+        if v.Name == "Square" then
+        v.Color = Color3.fromRGB( 255, 0, 255)
+        v.Material = "Neon"
+        end
+        end
+        for i,v in pairs (workspace.Properties.two:GetChildren()) do
+        if v.Name == "Square" then
+        v.Color = Color3.fromRGB( 128, 128, 128 )
+        v.Material = "Neon"
+        end
+        end        
+    else
+wait()
+
+workspace.Properties.eight.OriginSquare.Color = Color3.fromRGB(124, 92, 70)
+workspace.Properties.eight.OriginSquare.Material = "Concrete"
+
+workspace.Properties.five.OriginSquare.Color = Color3.fromRGB(124, 92, 70)
+workspace.Properties.five.OriginSquare.Material = "Concrete"
+
+workspace.Properties.four.OriginSquare.Color = Color3.fromRGB(124, 92, 70)
+workspace.Properties.four.OriginSquare.Material = "Concrete"
+
+workspace.Properties.nine.OriginSquare.Color = Color3.fromRGB(124, 92, 70)
+workspace.Properties.nine.OriginSquare.Material = "Concrete"
+
+workspace.Properties.one.OriginSquare.Color = Color3.fromRGB(124, 92, 70)
+workspace.Properties.one.OriginSquare.Material = "Concrete"
+
+workspace.Properties.seven.OriginSquare.Color = Color3.fromRGB(124, 92, 70)
+workspace.Properties.seven.OriginSquare.Material = "Concrete"
+
+workspace.Properties.six.OriginSquare.Color = Color3.fromRGB(124, 92, 70)
+workspace.Properties.six.OriginSquare.Material = "Concrete"
+
+workspace.Properties.three.OriginSquare.Color = Color3.fromRGB(124, 92, 70)
+workspace.Properties.three.OriginSquare.Material = "Concrete"
+
+workspace.Properties.two.OriginSquare.Color = Color3.fromRGB(124, 92, 70)
+workspace.Properties.two.OriginSquare.Material = "Concrete"
+
+--- Color3.fromRGB(124, 92, 70)
+--- Concrete
+
+wait(1)
+
+for i,v in pairs (workspace.Properties.eight:GetChildren()) do
+if v.Name == "Square" then
+v.Color = Color3.fromRGB(124, 92, 70)
+v.Material = "Concrete"
+end
+end
+for i,v in pairs (workspace.Properties.five:GetChildren()) do
+if v.Name == "Square" then
+v.Color = Color3.fromRGB(124, 92, 70)
+v.Material = "Concrete"
+end
+end
+for i,v in pairs (workspace.Properties.four:GetChildren()) do
+if v.Name == "Square" then
+v.Color = Color3.fromRGB(124, 92, 70)
+v.Material = "Concrete"
+end
+end
+
+for i,v in pairs (workspace.Properties.nine:GetChildren()) do
+if v.Name == "Square" then
+v.Color = Color3.fromRGB(124, 92, 70)
+v.Material = "Concrete"
+end
+end
+
+for i,v in pairs (workspace.Properties.one:GetChildren()) do
+if v.Name == "Square" then
+v.Color = Color3.fromRGB(124, 92, 70)
+v.Material = "Concrete"
+end
+end
+
+for i,v in pairs (workspace.Properties.seven:GetChildren()) do
+if v.Name == "Square" then
+v.Color = Color3.fromRGB(124, 92, 70)
+v.Material = "Concrete"
+end
+end
+
+for i,v in pairs (workspace.Properties.six:GetChildren()) do
+if v.Name == "Square" then
+v.Color = Color3.fromRGB(124, 92, 70)
+v.Material = "Concrete"
+end
+end
+
+for i,v in pairs (workspace.Properties.three:GetChildren()) do
+if v.Name == "Square" then
+v.Color = Color3.fromRGB(124, 92, 70)
+v.Material = "Concrete"
+end
+end
+for i,v in pairs (workspace.Properties.two:GetChildren()) do
+if v.Name == "Square" then
+v.Color = Color3.fromRGB(124, 92, 70)
+v.Material = "Concrete"
+end
+end
+
+workspace.Properties.nine.Name = "Property"
+workspace.Properties.one.Name = "Property"
+workspace.Properties.five.Name = "Property"
+workspace.Properties.two.Name = "Property"
+workspace.Properties.seven.Name = "Property"
+workspace.Properties.six.Name = "Property"
+workspace.Properties.eight.Name = "Property"
+workspace.Properties.four.Name = "Property"
+workspace.Properties.three.Name = "Property"
+
+
+    end
+end)
+
+Colorss = {"Red","Orange","Yellow","Green","Cyan","Blue","Purple","Pink","Gray/White"}
+
+Claim_Tool:Dropdown("Free Land On Color", Colorss, function(t)
+    for i,v in pairs(workspace.Properties:GetChildren()) do
+    if v.Owner.Value == nil
+    then
+    if t == "Cyan" then
+        local args = {
+    [1] = workspace.Properties.one,
+    [2] = Vector3.new(-240, 19, 204)}
+    game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(unpack(args))
+    wait(0.2)
+    maxnext()
+elseif t == "Gray/White" then
+        local args = {
+    [1] = workspace.Properties.two,
+    [2] = Vector3.new(-61, 19, 526)}
+    game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(unpack(args))
+    wait(0.2)
+    maxnext()
+elseif t == "Pink" then
+        local args = {
+    [1] = workspace.Properties.three,
+    [2] = Vector3.new(406, 0, 396)}
+    game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(unpack(args))
+    wait(0.2)
+    maxnext()
+elseif t == "Yellow" then
+        local args = {
+    [1] = workspace.Properties.four,
+    [2] = Vector3.new(712, 0, 396)}
+    game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(unpack(args))
+    wait(0.2)
+    maxnext()
+elseif t == "Orange" then
+    local args = {
+[1] = workspace.Properties.five,
+[2] = Vector3.new(712, 0, 396)}
+game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(unpack(args))
+wait(0.2)
+maxnext()
+elseif t == "Purple" then
+        local args = {
+    [1] = workspace.Properties.six,
+    [2] = Vector3.new(658, 0, -250)}
+    game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(unpack(args))
+    wait(0.2)
+    maxnext()
+elseif t == "Blue" then
+        local args = {
+    [1] = workspace.Properties.seven,
+    [2] = Vector3.new(383, 0, -250)}
+    game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(unpack(args))
+    wait(0.2)
+    maxnext()
+elseif t == "Red" then
+    local args = {
+[1] = workspace.Properties.eight,
+[2] = Vector3.new(275, 0, -512)}
+game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(unpack(args))
+wait(0.2)
+maxnext()
+elseif t == "Green" then
+    local args = {
+[1] = workspace.Properties.nine,
+[2] = Vector3.new(68, 0, -197)}
+game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(unpack(args))
+wait(0.2)
+    maxnext()
+    end
+else
+end
+end
+imtheowner = game:GetService("Players").LocalPlayer
+for i, v in pairs (workspace.Properties:GetChildren()) do
+if v:FindFirstChild("Owner") and v.Owner.Value == imtheowner then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame + Vector3.new(0,150,0)
+end
+end
+    end)
+
+
+
+Claim_Tool:Button("Save Current Slot", "!", function()
+local result = false
+repeat
+    wait(1)
+    getgenv().block_save = false
+    local slot_id = game:GetService("Players")["LocalPlayer"]["CurrentSaveSlot"].Value
+    result = game.ReplicatedStorage.LoadSaveRequests.RequestSave:InvokeServer(slot_id, game.Players.LocalPlayer)
+until result
+getgenv().block_save = true
+notify("Saved !","",5)
+end)
+
+
+Credits:Label("StepLT2 - GUI Owner / Dev")
+Credits:line()
+Credits:Label("UI made by Mana")
+
+task.wait()
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local ImageLabel = Instance.new("ImageLabel")
+local TextButton = Instance.new("TextButton")
+
+-- Properties
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.new(0.0313726, 1, 1)
+Frame.BorderColor3 = Color3.new(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.00873390585, 0, 0.469982862, 0)
+Frame.Size = UDim2.new(0, 91, 0, 34)
+Frame.Active = true
+Frame.Draggable = true
+
+
+ImageLabel.Parent = Frame
+ImageLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+ImageLabel.BorderColor3 = Color3.new(0, 0, 0)
+ImageLabel.BorderSizePixel = 0
+ImageLabel.Size = UDim2.new(0, 91, 0, 34)
+ImageLabel.Image = "http://www.roblox.com/asset/?id=13993632609"
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.new(1, 1, 1)
+TextButton.BackgroundTransparency = 1
+TextButton.BorderColor3 = Color3.new(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Size = UDim2.new(0, 91, 0, 40)
+TextButton.Font = Enum.Font.LuckiestGuy
+TextButton.Text = "Close UI"
+TextButton.TextColor3 = Color3.new(0, 0, 0)
+TextButton.TextSize = 18
+TextButton.MouseButton1Down:connect(function()
+	local N=game:GetService("VirtualInputManager")
+	N:SendKeyEvent(true,"RightControl",false,game)
+end)
