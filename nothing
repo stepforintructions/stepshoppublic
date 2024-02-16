@@ -1,55 +1,56 @@
-local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
-local PhantomForcesWindow = Library:NewWindow("Dupe")
-local aa2 = PhantomForcesWindow:NewSection("Items")
+    local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
+    local PhantomForcesWindow = Library:NewWindow("Dupe")
+    local aa2 = PhantomForcesWindow:NewSection("Items")
+    scr=getsenv(game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient)
 
 
-Slot = 0
-Wait = 0
+    Slot = 0
+    Wait = 0
 
-aa2:CreateSlider("Slot", 0, 6, 0, false, function(value)
-    Slot = value
-end)
-
-Wait11 = {"Select Time","1","2","3","4","5","6","7","8","9","10","11"}
-
-aa2:CreateSlider("Time", 0, 50, 0, false, function(value)
-    Wait = value
-end)
-
-aa2:CreateButton("Start Dupe", function()
-    spawn(function()
-        local args = {
-            [1] = Slot,
-            [2] = game:GetService("Players").LocalPlayer
-        }
-        game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(unpack(args))
+    aa2:CreateSlider("Slot", 0, 6, 0, false, function(value)
+        Slot = value
     end)
 
-    spawn(function()
-        repeat wait()until game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
-        for i=1,1 do 
-        wait(1)
-        scr.scrollSelection(-1)
-        wait()
-        scr.selectionMade()
-        wait()
-        scr.selectionMade()
-        wait(Wait)
-        game:shutdown()
-        end
+    Wait11 = {"Select Time","1","2","3","4","5","6","7","8","9","10","11"}
+
+    aa2:CreateSlider("Time", 0, 50, 0, false, function(value)
+        Wait = value
+    end)
+
+    aa2:CreateButton("Start Dupe", function()
+        spawn(function()
+            local args = {
+                [1] = Slot,
+                [2] = game:GetService("Players").LocalPlayer
+            }
+            game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(unpack(args))
+        end)
+
+        spawn(function()
+            repeat wait()until game.Players.LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
+            for i=1,1 do 
+            wait(1)
+            scr.scrollSelection(-1)
+            wait()
+            scr.selectionMade()
+            wait()
+            scr.selectionMade()
+            wait(Wait)
+            game:shutdown()
+            end
+
+        end)
 
     end)
 
-end)
 
 
 
 
 
-
-game.StarterGui:SetCore("SendNotification", {
-    Title = "HEY !"; -- the title (ofc)
-    Text = "Script Made by Step LT2"; -- what the text says (ofc)
-    Icon = ""; -- the image if u want. 
-    Duration = 5; -- how long the notification should in secounds
-    })
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "HEY !"; -- the title (ofc)
+        Text = "Script Made by Step LT2"; -- what the text says (ofc)
+        Icon = ""; -- the image if u want. 
+        Duration = 5; -- how long the notification should in secounds
+        })
