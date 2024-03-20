@@ -5,4 +5,4 @@ Nofitication:Notify(
 )
 end
 
-Notify("Step Shop", "HeLLO "..nameee.."\n\n Sorry script is down StepLT2 alread working on it", 50)
+Notify("Step Shop", "HeLLO \n\n Sorry script is down StepLT2 alread working on it", 50)
